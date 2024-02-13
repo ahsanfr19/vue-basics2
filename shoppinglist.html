@@ -1,0 +1,97 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Menu List</title>
+  <style>
+  
+  </style>
+</head>
+<body>
+
+<div id="app">
+  <p>Order Here Now!</p>
+  <form v-on:submit.prevent="addItem" >
+    <label for="dinner">Dinner</label>
+    <input type="radio" value="Dinner" id="" v-model="itemType">
+    <br/>
+    <label for="Drink">Drink</label>
+    <input type="radio" value = "Drink" id="" v-model="itemType">
+    <br/>
+    <label for="Drink">Dessert</label>
+    <input type="radio" value = "Dessert" id="" v-model="itemType">
+    <br/>
+    
+    <p v-show="itemType">
+    <label for="">
+      <select v-model="itemName" name="" id="">
+        <option value="">Select Item</option>
+        <option :value="item.name" v-for="item in preDefItems" v-show="item.type == itemType">{{item.name}}</option>
+      </select>
+    </label>
+  </p>
+  <p v-show = "itemName"  >
+    <input v-model.number="itemNumber" type="number" placeholder="how many items..."></p>
+    <button type="submit">Order</button>
+  </form>
+
+  <hr>
+
+
+  <ul>
+    <li v-for="i in order">{{i.name}}, {{i.number}}</li>
+  </ul>
+</div>
+
+
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script>
+  const app = Vue.createApp({
+    data() {
+      return {
+        itemType : '',
+        itemName : '',
+        itemNumber : null,
+        preDefItems : [
+        {name: 'Burrito', type: 'Dinner', },
+          { name: 'Pizza', type: 'Dinner',  },
+          { name: 'Pho Soup', type: 'Dinner', },
+          { name: 'Spaghetti', type: 'Dinner', },
+          { name: 'Fish', type: 'Dinner', },
+          { name: 'Cake', type: 'Dessert', },
+          { name: 'Rice', type: 'Dinner', },
+          { name: 'Salad', type: 'Dinner', },
+          { name: 'Coke', type: 'Drink', },
+          { name: 'Green Soda', type: 'Drink'},
+          { name: 'Doughnut', type: 'Dessert' },
+          { name: 'Ice Cream', type: 'Dessert' },
+          { name: 'Lemonade', type: 'Drink'},
+          { name: 'Pancakes', type: 'Dessert'},
+          { name: 'Water', type: 'Drink',}
+        ],
+        order : [],
+
+      }
+    },
+    methods: {
+      addItem(){
+        let orderItems = {
+          name : this.itemName,
+          number : this.itemNumber,
+        }
+        console.log(orderItems);
+        this.order.push(orderItems);
+        this.itemName = ''
+        this.itemType = ''
+        this.itemNumber = null
+
+      }
+
+    }
+  })
+ app.mount('#app')
+</script>
+
+</body>
+
+</html>
